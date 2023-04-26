@@ -15,6 +15,9 @@ export const Movie = ({ movie }) => {
                 <Link to={`/movie/${movie.id}`} className="btn btn-primary">
                     Ver detalhes
                 </Link>
+                <Link to={`/movie/${movie.id}`} className="btn btn-primary">
+                    Adicionar aos favoritos
+                </Link>
             </div>
         </div>
     );
