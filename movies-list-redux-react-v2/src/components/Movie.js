@@ -1,7 +1,14 @@
 //Composes a card structure for a movie
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { addMovie, removeMovie } from "../store/features/favoritos";
+import { selectFavorites } from "../store/features/selectors/selectFavorites";
 
 export const Movie = ({ movie }) => {
+
+    const dispatch = useDispatch();
+    const favoritos = useSelector(selectFavorites);
+
     return (
         <div className="movie-item">
             <div>
@@ -11,13 +18,25 @@ export const Movie = ({ movie }) => {
                 />
             </div>
             <div className="movie-excerpt">
-                <h3>{movie.title}</h3>
-                <Link to={`/movie/${movie.id}`} className="btn btn-primary">
-                    Ver detalhes
-                </Link>
-                <Link to={`/movie/${movie.id}`} className="btn btn-primary">
+            <h3>{movie.title}</h3>
+            <Link to={`/movie/${movie.id}`} className="btn btn-primary">
+                Ver detalhes
+            </Link>
+            {favoritos.find((m) => m.id === movie.id) ? (
+                <button
+                    className="btn btn-danger"
+                    onClick={() => dispatch(removeMovie(movie))}
+                >
+                    Remover dos favoritos
+                </button>
+            ) : (
+                <button
+                    className="btn btn-secondary"
+                    onClick={() => dispatch(addMovie(movie))}
+                >
                     Adicionar aos favoritos
-                </Link>
+                </button>
+            )}
             </div>
         </div>
     );
